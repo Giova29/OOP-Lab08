@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Random;
@@ -19,8 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-import org.apache.commons.io.Charsets;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -45,7 +42,6 @@ public class BadIOGUI {
     public BadIOGUI() {
         final JPanel canvas = new JPanel();
         final JPanel boxLayoutPanel = new JPanel();
-        //frame.setLayout(new BorderLayout());
         canvas.setLayout(new BorderLayout());
         boxLayoutPanel.setLayout(new BoxLayout(boxLayoutPanel, BoxLayout.X_AXIS));
         final JButton write = new JButton("Write on file");

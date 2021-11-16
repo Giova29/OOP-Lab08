@@ -1,10 +1,18 @@
 package it.unibo.oop.lab.mvcio;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * 
  */
 public class Controller {
 
+    private static final String PATH = System.getProperty("user.home")
+            + System.getProperty("file.separator")
+            + "output.txt";
+    private File f;
     /*
      * This class must implement a simple controller responsible of I/O access. It
      * considers a single file at a time, and it is able to serialize objects in it.
@@ -28,4 +36,50 @@ public class Controller {
      * to a software that runs correctly on every platform.
      */
 
+    public Controller(final File f) {
+        this.f = f;
+    }
+
+    public Controller() {
+        this(new File(PATH));
+    }
+
+    /**
+     * Sets the file.
+     * 
+     * @param f
+     * the file you want to control
+     */
+    public void setFile(final File f) {
+        this.f = f;
+    }
+     /**
+      * 
+      * @return
+      * the file.
+      */
+    public File getFile() {
+        return this.f;
+    }
+
+    /**
+     * 
+     * @return
+     * the path of the file
+     */
+    public String getPath() {
+        return f.getAbsolutePath();
+    }
+
+    /**
+     * Writes the string you pass on the file.
+     * @param s
+     * the string you want to write on the file
+     * @throws IOException 
+     */
+    public void writeOnFile(final String s) throws IOException {
+        final FileWriter fw = new FileWriter(f);
+        fw.write(s);
+        fw.close();
+    }
 }
