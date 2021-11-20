@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -67,12 +68,16 @@ public final class SimpleGUIWithFileChooser {
         writingThingsPanel.setLayout(new BorderLayout());
         browsePanel.setLayout(new BorderLayout());
 
-        final JTextArea ta = new JTextArea();
+        final JTextArea textToBeWritten = new JTextArea();
+        final JTextArea filePath = new JTextArea();
         final JButton save = new JButton("Save");
         final JButton browse = new JButton("Browse");
-        writingThingsPanel.add(ta, BorderLayout.NORTH);
+        filePath.setEditable(false);
+        filePath.setText("File: " + f.getAbsolutePath());
+        writingThingsPanel.add(textToBeWritten, BorderLayout.NORTH);
         writingThingsPanel.add(save, BorderLayout.SOUTH);
         browsePanel.add(browse);
+        browsePanel.add(filePath, BorderLayout.SOUTH);
         frame.add(writingThingsPanel, BorderLayout.SOUTH);
         frame.add(browsePanel, BorderLayout.NORTH);
 
@@ -84,7 +89,7 @@ public final class SimpleGUIWithFileChooser {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 try {
-                    new Controller(f).writeOnFile(ta.getText());
+                    new Controller(f).writeOnFile(textToBeWritten.getText());
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -95,8 +100,12 @@ public final class SimpleGUIWithFileChooser {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 final JFileChooser fc = new JFileChooser();
-                if (fc.showSaveDialog(browse) == JFileChooser.APPROVE_OPTION) {
+                final int returnState = fc.showSaveDialog(browse);
+                if (returnState == JFileChooser.APPROVE_OPTION) {
                     f = fc.getSelectedFile();
+                    filePath.setText("File: " + f.getAbsolutePath());
+                } else if (returnState == JFileChooser.ERROR_OPTION) {
+                    JOptionPane.showMessageDialog(frame, "Error");
                 }
             }
         });
